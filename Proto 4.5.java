@@ -6,7 +6,7 @@ int bColorGreen = 255;
 int bColorBlue = 255;
 float ballX;
 float ballY;
-float ballSpeed =1;
+float ballSpeed = 1;
 int pPaddleX;
 int pPaddleY;
 int bSpawnCount;
@@ -30,14 +30,14 @@ void draw(){
     ballX = ballX - ballSpeed;
     if(ballX - 25 <= 0){
       bMotionX = true;
-      ballSpeed = ballSpeed + 0.1;
+      ballSpeedUp();
       colorGen();
     }
   }else if(bMotionX){
     ballX = ballX + ballSpeed;
     if(ballX + 25 >= 900){
       bMotionX = false;
-      ballSpeed = ballSpeed + 0.1;
+      ballSpeedUp();
       colorGen();
     }
   }
@@ -46,18 +46,17 @@ void draw(){
     ballY = ballY - ballSpeed;
     if(ballY - 25 <= 0){
       bMotionY = true;
-      ballSpeed = ballSpeed + 0.1;
+      ballSpeedUp();
       colorGen();
     }
   }else if(bMotionY){
     ballY = ballY + ballSpeed;
     if(ballY + 25 >= 600){
       bMotionY =  false;
-      ballSpeed = ballSpeed + 0.1;
+      ballSpeedUp();
       colorGen();
     }
   }
-  
 }
 
 void colorGen(){
@@ -72,7 +71,6 @@ void colorGen(){
 
 void ballSpawn(){
   int seedHold = 1;
-  
   int xMotion = 0;
   int yMotion = 0;
   
@@ -95,12 +93,21 @@ void ballSpawn(){
     bMotionY = !bMotionY;
   }
 
-
   println("Spawn Location was " +ballX+ " and " +ballY+ " and " +bMotionX+ " " +bMotionY);
   seedHold++;
   }
 }
 
+void ballSpeedUp(){
+  if(ballSpeed < 5){
+    ballSpeed = ballSpeed+0.1;
+    if(ballSpeed > 5){ //unsure why my float is adding unevenly, so added a check and fixer for if the speed goes above 5.
+      ballSpeed = 5; 
+    }
+  }
+}
 
+void pPaddle(){
+  rect(mouseX, 10,100,20);
 
-//Add the radius of your ellipse to your x so that the ellipse will change direction when the edge hits the side rather than teh center
+}
